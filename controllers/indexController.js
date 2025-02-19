@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const db = require("../prisma/queries");
 
 exports.indexGet = (req, res) => {
-  console.log(req.session);
   if (req.isAuthenticated()) {
     res.render("index");
   } else {
@@ -10,10 +9,11 @@ exports.indexGet = (req, res) => {
   }
 };
 exports.indexPost = (req, res) => {
-  req.logout(() => {
-    res.redirect("/");
-  });
+  console.log(req.file, req.body);
+
+  res.redirect("/");
 };
+
 exports.loginGet = (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect("/");
@@ -35,4 +35,10 @@ exports.signupPost = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   await db.createUser(username, hashedPassword, email);
   res.redirect("/login");
+};
+
+exports.signoutPost = async (req, res) => {
+  req.logout(() => {
+    res.redirect("/");
+  });
 };
