@@ -3,12 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
     <title>Index</title>
   </head>
   <body>
-    <button onclick="document.querySelector('dialog').showModal()">
-      New Folder
-    </button>
+    <nav>
+      <span>Welcome <%=currentUser.name%></span>
+      <form action="/signout" method="post">
+        <button type="submit">Sign-out</button>
+      </form>
+    </nav>
+    <main>
+      <h1>My Folders</h1>
+      <div>
+        <button onclick="document.querySelector('dialog').showModal()">
+          New Folder
+        </button>
+      </div>
+      <section>
+        <div class="grid">
+          <span>Name</span><span>Date Created</span><span>Size</span>
+        </div>
+        <% folders.map(folder=> { %>
+        <a href="/<%=folder.name%>" class="folder"
+          ><div class="grid">
+            <span><%=folder.name%></span>
+            <span><%=new Date(folder.createdAt).toDateString()%></span>
+            <span><%=folder.size%></span>
+          </div></a
+        >
+        <% }) %>
+      </section>
+      <form action="" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" />
+        <button type="submit">Upload File</button>
+      </form>
+    </main>
+
     <dialog>
       <form action="" method="post">
         <label for="folderName">New Folder</label>
@@ -16,12 +47,5 @@
         <button>Create</button>
       </form>
     </dialog>
-    <form action="" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" id="file" />
-      <button type="submit">Upload File</button>
-    </form>
-    <form action="/signout" method="post">
-      <button type="submit">Sign-out</button>
-    </form>
   </body>
 </html>

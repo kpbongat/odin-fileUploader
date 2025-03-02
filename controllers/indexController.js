@@ -1,9 +1,11 @@
 const bcrypt = require("bcryptjs");
 const db = require("../prisma/queries");
 
-exports.indexGet = (req, res) => {
+exports.indexGet = async (req, res) => {
   if (req.isAuthenticated()) {
-    res.render("index");
+    const { id } = req.user;
+    const userFolders = await db.getAllFolders(id);
+    res.render("index", { folders: userFolders });
   } else {
     res.redirect("/login");
   }

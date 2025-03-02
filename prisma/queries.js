@@ -53,4 +53,13 @@ exports.createFolder = async (name, userId) =>
 
 exports.getAllUsers = async () => run(async () => prisma.user.findMany());
 
-exports.getAllFolders = async () => run(async () => prisma.folder.findMany());
+exports.getAllFolders = async (userId) =>
+  run(async () =>
+    prisma.folder.findMany({
+      where: {
+        userId: {
+          equals: userId,
+        },
+      },
+    })
+  );
