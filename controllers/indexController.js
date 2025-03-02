@@ -8,9 +8,10 @@ exports.indexGet = (req, res) => {
     res.redirect("/login");
   }
 };
-exports.indexPost = (req, res) => {
-  console.log(req.file, req.body);
-
+exports.indexPost = async (req, res) => {
+  const { folderName } = req.body;
+  const { id } = req.user;
+  await db.createFolder(folderName, id);
   res.redirect("/");
 };
 

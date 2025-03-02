@@ -8,7 +8,7 @@ async function run(query) {
     return result;
   } catch (e) {
     await prisma.$disconnect();
-    return e;
+    throw e;
   }
 }
 
@@ -41,4 +41,16 @@ exports.createUser = async (name, password, email) =>
     })
   );
 
+exports.createFolder = async (name, userId) =>
+  run(async () =>
+    prisma.folder.create({
+      data: {
+        name,
+        userId,
+      },
+    })
+  );
+
 exports.getAllUsers = async () => run(async () => prisma.user.findMany());
+
+exports.getAllFolders = async () => run(async () => prisma.folder.findMany());

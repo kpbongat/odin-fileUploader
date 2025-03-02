@@ -6,10 +6,22 @@
     <title>Index</title>
   </head>
   <body>
+    <button onclick="document.querySelector('dialog').showModal()">
+      New Folder
+    </button>
+    <dialog>
+      <form action="" method="post">
+        <label for="folderName">New Folder</label>
+        <input type="text" name="folderName" id="folderName" />
+        <button>Create</button>
+      </form>
+    </dialog>
     <form action="" method="post" enctype="multipart/form-data">
       <input type="file" name="file" id="file" />
       <button type="submit">Upload File</button>
     </form>
-    <form action="" method="post"><button type="submit">Sign-out</button></form>
+    <form action="/signout" method="post">
+      <button type="submit">Sign-out</button>
+    </form>
   </body>
 </html>
